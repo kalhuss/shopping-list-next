@@ -1,23 +1,45 @@
 import { FC, SetStateAction, Dispatch } from 'react';
+import { useState } from 'react';
+import useRef from 'react';
+import useEffect from 'react';
+//import axois from 'axios';
+
 
 interface ItemModalProps {
     setShowModal : Dispatch<SetStateAction<boolean>>
 }
 
+
 const ItemModal: FC<ItemModalProps> = ({setShowModal}) => {
+
+    const [input, setInput] = useState('')
+
+    const addItem = (item: string) => {
+        //call the api without using axios
+        fetch('/api/addItem', {method: 'POST', body: JSON.stringify({item})})
+    }
+
+    
+
+
     return (
         <div className='absolute inset-0 flex items-center justify-center bg-black/75'>
             <div className='rounded-md space-y-4 p-3 bg-white'>
                 <h3 className='text-2xl font-semibold'>Name of item</h3>
-                <input type = 'text'
-                className='w-full rounded-md border-gray-300 bg-gray-100 shadow-sm focus:border-blue-300 focus:ring-blue-500 focus:ring-2 focus:outline-none'/>
+                <input 
+                    type = 'text'
+                    value = {input}
+                    onChange = {(e) => setInput(e.target.value)}
+                    className='w-full rounded-md border-gray-300 bg-gray-100 shadow-sm focus:border-blue-300 focus:ring-blue-500 focus:ring-2 focus:outline-none'
+                />
                 <div className='grid grid-cols-2 gap-8'>
-                    <button className='bg-green-500 text-white text-xs px-2 py-2 rounded-md hover:bg-green-600'>Add</button>
+                    <button onClick = {() => {addItem(input); setShowModal(false)}} className='bg-green-500 text-white text-xs px-2 py-2 rounded-md hover:bg-green-600'>Add</button>
                     <button onClick={() => setShowModal(false)} className='bg-red-500 text-white text-xs px-2 py-2 rounded-md hover:bg-red-600'>Cancel</button>
                 </div>
             </div>
         </div>
     )
 }
+
 
 export default ItemModal

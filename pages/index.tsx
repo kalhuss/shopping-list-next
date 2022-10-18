@@ -4,6 +4,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState } from 'react'
 import ItemModal from '../components/itemModal'
+import { shoppingItem } from '@prisma/client'
 
 const Home: NextPage = () => {
 
@@ -18,6 +19,7 @@ const Home: NextPage = () => {
       </Head>
 
       {showModal && <ItemModal setShowModal = { setShowModal }/>}
+
 
       <main className='mx-auto my-12 max-w-3xl'>
         <div className="flex justify-between">
