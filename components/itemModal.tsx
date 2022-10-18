@@ -1,26 +1,25 @@
 import { FC, SetStateAction, Dispatch } from 'react';
 import { useState } from 'react';
-import useRef from 'react';
-import useEffect from 'react';
-//import axois from 'axios';
+import { shoppingItem } from "@prisma/client";
+import Router from 'next/router'
 
-
+//Interface for the props
 interface ItemModalProps {
-    setShowModal : Dispatch<SetStateAction<boolean>>
+    setShowModal : Dispatch<SetStateAction<boolean>>,
+    items : shoppingItem[];
 }
 
 
 const ItemModal: FC<ItemModalProps> = ({setShowModal}) => {
 
+    //States for the form
     const [input, setInput] = useState('')
 
+    //Calls the API to create a new item
     const addItem = (item: string) => {
-        //call the api without using axios
         fetch('/api/addItem', {method: 'POST', body: JSON.stringify({item})})
+        .then(() => Router.push('/'))
     }
-
-    
-
 
     return (
         <div className='absolute inset-0 flex items-center justify-center bg-black/75'>
@@ -37,9 +36,10 @@ const ItemModal: FC<ItemModalProps> = ({setShowModal}) => {
                     <button onClick={() => setShowModal(false)} className='bg-red-500 text-white text-xs px-2 py-2 rounded-md hover:bg-red-600'>Cancel</button>
                 </div>
             </div>
+            
         </div>
     )
 }
 
-
+//Default export
 export default ItemModal
