@@ -1,12 +1,12 @@
-import { FC, SetStateAction, Dispatch } from 'react';
-import { useState } from 'react';
-import { shoppingItem } from "@prisma/client";
+import { FC, SetStateAction, Dispatch } from 'react'
+import { useState } from 'react'
+import { shoppingItem } from "@prisma/client"
 import Router from 'next/router'
 
 //Interface for the props
 interface ItemModalProps {
     setShowModal : Dispatch<SetStateAction<boolean>>,
-    items : shoppingItem[];
+    items : shoppingItem[]
 }
 
 
@@ -20,9 +20,10 @@ const ItemModal: FC<ItemModalProps> = ({setShowModal}) => {
         fetch('/api/addItem', {method: 'POST', body: JSON.stringify({item})})
         .then(() => Router.push('/'))
     }
-
+    
+    //Creating the component modal to add a new item
     return (
-        <div className='absolute inset-0 flex items-center justify-center bg-black/75'>
+        <div className='absolute z-10 inset-0 flex items-center justify-center bg-black/75'>
             <div className='rounded-md space-y-4 p-3 bg-white'>
                 <h3 className='text-2xl font-semibold'>Name of item</h3>
                 <input 

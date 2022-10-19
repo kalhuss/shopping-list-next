@@ -3,16 +3,16 @@ import Head from 'next/head'
 import { useState } from 'react'
 import ItemModal from '../components/itemModal'
 import { shoppingItem } from '@prisma/client'
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma/prisma"
+import ToggleItem from '../components/toggleItem'
 
-const prisma = new PrismaClient();
-
+//Interface for the props
 interface PageProps {
-  items: shoppingItem[];
+  items: shoppingItem[]
 }
 
 const Home: NextPage<PageProps> = ({ items }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   return (
     <>
@@ -24,30 +24,17 @@ const Home: NextPage<PageProps> = ({ items }) => {
 
       {showModal && <ItemModal setShowModal = {setShowModal} items = { items } />}
 
-
       <main className='mx-auto my-12 max-w-3xl'>
         <div className="flex justify-between">
           <h2 className="text-2xl font-semibold">Shopping List</h2>
           <button type='button' onClick={ () => setShowModal(true) } className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded drop-shadow-md"> Add Item </button>
         </div>       
-        {/* <ul className="mt-4">
-          {items.map((item) => (
-          <li className="flex justify-between items-center bg-gray-100 p-4 mb-3 rounded-md drop-shadow-md">
-            <span key={item.id}>{item.name}</span>
-          </li>
-        ))}
-        </ul> */}
         <ul className="mt-4">
           {items.map((item) => {
-            const { id, name } = item;
             return (
-              <li key={id}className="flex justify-between items-center bg-gray-100 p-4 mb-3 rounded-md drop-shadow-md">
-                <span className='font-weight-500'>{name}</span>
-                <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">X</button>
-              </li>
+              <ToggleItem {...item}/>
             )
           })}
-          
         </ul>
       </main>
     </>
@@ -55,12 +42,13 @@ const Home: NextPage<PageProps> = ({ items }) => {
 }
 
 export async function getServerSideProps() {
-  const items = await prisma.shoppingItem.findMany();
+  const items = await prisma.shoppingItem.findMany()
   return {
     props: {
       items,
+      checked: false
     },
-  };
+  }
 
 }
 
