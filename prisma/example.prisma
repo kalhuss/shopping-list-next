@@ -1,6 +1,0 @@
-model Page {
-  id String @id @default(cuid())
-  content String
-  date DateTime
-  title String
-}

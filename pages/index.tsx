@@ -32,7 +32,7 @@ const Home: NextPage<PageProps> = ({ items }) => {
         <ul className="mt-4">
           {items.map((item) => {
             return (
-              <ToggleItem {...item}/>
+              <ToggleItem key = {item.id} {...item}/>
             )
           })}
         </ul>

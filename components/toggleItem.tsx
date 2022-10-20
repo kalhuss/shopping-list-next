@@ -4,9 +4,9 @@ import { shoppingItem } from "@prisma/client"
 import Router from 'next/router'
 import { motion } from 'framer-motion'
 
-const toggleItem: FC<shoppingItem> = ({ id, name, checked }) => {
+const ToggleItem: FC<shoppingItem> = ({ id, name, checked }) => {
 
-    const [isChecked, setIsChecked] = useState<boolean>(checked)
+    const [isChecked, setIsChecked] = useState<Boolean>(checked)
 
     //Call the API to delete an item
     const deleteItem = () => {
@@ -43,5 +43,5 @@ const toggleItem: FC<shoppingItem> = ({ id, name, checked }) => {
     )
 }
 
-export default toggleItem
+export default ToggleItem
 
